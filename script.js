@@ -4,7 +4,7 @@ const questions = [
     { question: "2~3일 내에 체중이 2Kg이상 증가함", id: "q3", oScore: 2 },
     { question: "일주일내에 체중이 2Kg 증가함", id: "q4", oScore: 1 },
     { question: "발, 발목, 다리, 복부의 부종이 증가함", id: "q5", oScore: 1 },
-    { question: "일상생활중 비정상적인 피로나 약함을 느낌", id: "q6", oScore: 1 },
+    { question: "비정상적인 피로나 약함을 느낌", id: "q6", oScore: 1 },
     { question: "기침이 계속됨", id: "q7", oScore: 1 },
     { question: "어지러움", id: "q8", oScore: 1 },
     { question: "가슴 두근거림", id: "q9", oScore: 1 },
