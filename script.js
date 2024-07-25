@@ -12,9 +12,9 @@ const questions = [
 ];
 
 const additionalQuestions = [
-    { question: "7g/일이하 소금 섭취하셨나요?", id: "aq1", oScore: 0 },
-    { question: "물 종류 1.5~2L/일이하로 드셨나요?", id: "aq2", oScore: 0 },
-    { question: "오늘 약을 복용하셨나요?", id: "aq3", oScore: 0 },
+    { question: "7g/일이하 소금 섭취하셨나요?", id: "aq1"},
+    { question: "물 종류 1.5~2L/일이하로 드셨나요?", id: "aq2"},
+    { question: "오늘 약을 복용하셨나요?", id: "aq3"},
 ];
 
 const questionsElement = document.getElementById("questions");
