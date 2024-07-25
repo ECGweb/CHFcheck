@@ -153,6 +153,7 @@ function displayAdditionalQuestions() {
         questionDiv.appendChild(buttonsDiv);
         additionalQuestionsElement.appendChild(questionDiv);
     });
+    additionalQuestionsElement.scrollIntoView({ behavior: "smooth" });
 }
 
 function clearAdditionalQuestions() {
