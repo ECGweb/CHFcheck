@@ -66,12 +66,14 @@ function handleButtonClick(questionId, selectedValue) {
     currentButton.classList.add("selected");
     currentButton.classList.add(selectedValue === "O" ? "o-button" : "x-button"); // 선택된 값에 따라 O/X 클래스 추가
 }
+
 submitButton.addEventListener("click", () => {
     let totalScore = 0;
     const answers = {};
-    let allAnswered = true; 
+    let allAnswered = true;
     const imageContainer = document.getElementById("imageContainer");
     const resultImage = document.getElementById("resultImage");
+    const additionalQuestionsElement = document.getElementById("additionalQuestions");
 
     questions.forEach(question => {
         const selectedButton = document.querySelector(`.question button[name="${question.id}"].selected`);
@@ -79,45 +81,59 @@ submitButton.addEventListener("click", () => {
         if (selectedButton && selectedButton.value === "O") {
             totalScore += question.oScore;
         }
-        if (!selectedButton) { // 선택된 버튼이 없으면
-            allAnswered = false; // 모든 질문에 답변하지 않은 것으로 판단
+        if (!selectedButton) {
+            allAnswered = false;
         }
     });
 
     if (!allAnswered) {
         alert("모든 질문에 답변해주세요.");
-        return; 
+        return;
     }
 
-    if (totalScore < 5) { // 초록불
+    resultElement.textContent = `총점: ${totalScore}점`;
+
+    // 이미지 표시 및 스크롤 이동
+    if (totalScore < 5) {
         resultImage.src = "img/green.jpg";
-        resultElement.textContent = '정상';
-    }
-    else if (totalScore < 10) {// 노란불
-        resultImage.src = "img/yellow.jpg";
-        resultElement.textContent = '주의';
-    }
-    else if (totalScore >= 10 ) { // 빨간불
-        resultImage.src = "img/red.jpg";
-        resultElement.textContent = '위험';
-    }
+        resultElement.textContent = "정상";
+        imageContainer.style.display = "block";
 
-    imageContainer.style.display = "block";
-
-    resultImage.onload = function () {
-    imageContainer.style.display = "block"; // 이미지 표시
-    if (totalScore < 10) {
-        if (!additionalQuestionsDisplayed) { // 이미 추가 질문이 표시된 경우에는 다시 표시하지 않음
+        // 추가 질문 표시
+        if (!additionalQuestionsDisplayed) {
             additionalQuestionsDisplayed = true;
             displayAdditionalQuestions();
+            resultImage.onload = function () { // 이미지 로딩 후 추가 질문으로 스크롤
+                additionalQuestionsElement.scrollIntoView({ behavior: "smooth" });
+            };
         }
-        resultImage.scrollIntoView({ behavior: "smooth" }); // 결과 이미지로 부드럽게 스크롤
-    } else {
-        additionalQuestionsDisplayed = false;
+    } 
+    else if (totalScore < 10) {
+        resultImage.src = "img/yellow.jpg";
+        resultElement.textContent = "주의";
+        imageContainer.style.display = "block";
+
+        // 추가 질문 표시
+        if (!additionalQuestionsDisplayed) {
+            additionalQuestionsDisplayed = true;
+            displayAdditionalQuestions();
+            resultImage.onload = function () { // 이미지 로딩 후 추가 질문으로 스크롤
+                additionalQuestionsElement.scrollIntoView({ behavior: "smooth" });
+            };
+        }
+    } 
+    else {
+        resultImage.src = "img/red.jpg";
+        resultElement.textContent = "위험";
+        imageContainer.style.display = "block";
+
+        // 추가 질문 제거
         clearAdditionalQuestions();
-        resultElement.scrollIntoView({ behavior: "smooth" }); // 결과 텍스트로 부드럽게 스크롤
+        additionalQuestionsDisplayed = false;
+        resultImage.onload = function () { // 이미지 로딩 후 결과로 스크롤
+            resultElement.scrollIntoView({ behavior: "smooth" });
+        };
     }
-};
 });
 
 function displayAdditionalQuestions() {
