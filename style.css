@@ -1,13 +1,24 @@
+/* 기본 스타일 (모든 화면 크기에 적용) */
 body {
     font-family: sans-serif;
-    max-width: 600px;
     margin: 0 auto;
+    max-width: 800px;
+    font-size: 30px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-top : 40px;
+    margin-bottom: 40px;
 }
 
 .question {
     margin-bottom: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
 }
 
@@ -15,10 +26,13 @@ body {
     flex: 1;
     text-align: left;
     margin-right: 20px;
+    font-size: inherit;
 }
 
 .buttons {
     display: flex;
+    flex-direction: row;
+    /* 버튼 가로 정렬 */
     gap: 5px;
 }
 
@@ -29,6 +43,7 @@ body {
     margin: 0;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-size: 32px;
 }
 
 .buttons button:hover,
@@ -42,18 +57,15 @@ body {
     border-color: #45a049;
 }
 
-#submitButton {
-    padding: 10px 20px;
-    cursor: pointer;
+.buttons button.selected.o-button {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #45a049;
 }
 
-#result {
-    margin-top: 20px;
-    font-weight: bold;
-}
-
-h1 {
-    text-align: center;
+.buttons button.selected.x-button {
+    background-color: #dc3545;
+    border-color: #dc3545;
 }
 
 #submitButton {
@@ -61,8 +73,56 @@ h1 {
     margin: 20px auto;
     padding: 10px 20px;
     cursor: pointer;
+    margin-top : 30px;
+    margin-bottom: 30px;
+    font-size: 32px;
 }
 
-#additionalQuestions {
+#result {
     margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 50px;
+    /* 결과 텍스트 가운데 정렬 */
+}
+
+#imageContainer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#resultImage {
+    max-width: 100%;
+    /* 이미지 최대 너비를 부모 요소 너비에 맞춤 */
+    height: auto;
+    /* 높이는 너비에 비례하여 자동 조절 */
+}
+
+/* 미디어 쿼리 (화면 크기가 768px 이하일 때 적용) */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        /* 작은 화면에서 패딩 추가 */
+    }
+
+    .question {
+        flex-direction: column;
+        /* 질문과 버튼을 세로로 배치 */
+        align-items: stretch;
+        /* 버튼 너비를 질문에 맞춤 */
+    }
+
+    .question-text {
+        margin-right: 0;
+        /* 질문 오른쪽 여백 제거 */
+        margin-bottom: 10px;
+        /* 질문 아래 여백 추가 */
+    }
+
+    .buttons {
+        flex-direction: row;
+        /* 버튼 가로 정렬 유지 */
+        justify-content: center;
+        /* 버튼 가운데 정렬 */
+    }
 }

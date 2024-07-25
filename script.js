@@ -4,7 +4,7 @@ const questions = [
     { question: "2~3일 내에 체중이 2Kg이상 증가함", id: "q3", oScore: 2 },
     { question: "일주일내에 체중이 2Kg 증가함", id: "q4", oScore: 1 },
     { question: "발, 발목, 다리, 복부의 부종이 증가함", id: "q5", oScore: 1 },
-    { question: "일상적인 활동을 할 때 비정상적인 피로나 약함을 느낌", id: "q6", oScore: 1 },
+    { question: "일상생활중 비정상적인 피로나 약함을 느낌", id: "q6", oScore: 1 },
     { question: "기침이 계속됨", id: "q7", oScore: 1 },
     { question: "어지러움", id: "q8", oScore: 1 },
     { question: "가슴 두근거림", id: "q9", oScore: 1 },
@@ -56,41 +56,65 @@ questions.forEach(question => {
 
 function handleButtonClick(questionId, selectedValue) {
     const allButtons = document.querySelectorAll(`.question button[name="${questionId}"]`);
-    allButtons.forEach(button => button.classList.remove("selected"));
+    allButtons.forEach(button => {
+        button.classList.remove("selected");
+        button.classList.remove("o-button"); // O 버튼 클래스 제거
+        button.classList.remove("x-button"); // X 버튼 클래스 제거
+    });
 
     const currentButton = document.querySelector(`.question button[name="${questionId}"][value="${selectedValue}"]`);
     currentButton.classList.add("selected");
+    currentButton.classList.add(selectedValue === "O" ? "o-button" : "x-button"); // 선택된 값에 따라 O/X 클래스 추가
 }
-
 submitButton.addEventListener("click", () => {
     let totalScore = 0;
     const answers = {};
+    let allAnswered = true; 
+    const imageContainer = document.getElementById("imageContainer");
+    const resultImage = document.getElementById("resultImage");
+
     questions.forEach(question => {
         const selectedButton = document.querySelector(`.question button[name="${question.id}"].selected`);
         answers[question.id] = selectedButton ? selectedButton.value : null;
         if (selectedButton && selectedButton.value === "O") {
             totalScore += question.oScore;
         }
+        if (!selectedButton) { // 선택된 버튼이 없으면
+            allAnswered = false; // 모든 질문에 답변하지 않은 것으로 판단
+        }
     });
 
-    resultElement.textContent = `총점: ${totalScore}점`;
+    if (!allAnswered) {
+        alert("모든 질문에 답변해주세요.");
+        return; 
+    }
 
     if (totalScore < 5) { // 초록불
         if (additionalQuestionsDisplayed == false) {
             additionalQuestionsDisplayed = true;
             displayAdditionalQuestions();
         }
+        resultImage.src = "img/green.jpg";
+        imageContainer.style.display = "block";
+        resultElement.textContent = '정상';
     }
-    if (totalScore < 10) {// 노란불
+    else if (totalScore < 10) {// 노란불
         if (additionalQuestionsDisplayed == false){
             additionalQuestionsDisplayed = true;
             displayAdditionalQuestions();
         }
-    } else if (totalScore >= 10 ) { // 빨간불
+        resultImage.src = "img/yellow.jpg";
+        imageContainer.style.display = "block";
+        resultElement.textContent = '주의';
+    }
+    else if (totalScore >= 10 ) { // 빨간불
         if (additionalQuestionsDisplayed == true) {
             additionalQuestionsDisplayed = false;
             clearAdditionalQuestions();
         }
+        resultImage.src = "img/red.jpg";
+        imageContainer.style.display = "block";
+        resultElement.textContent = '위험';
     }
 });
 
