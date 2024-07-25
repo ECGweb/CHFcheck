@@ -90,35 +90,41 @@ submitButton.addEventListener("click", () => {
     }
 
     if (totalScore < 5) { // 초록불
-        if (additionalQuestionsDisplayed == false) {
-            additionalQuestionsDisplayed = true;
-            displayAdditionalQuestions();
-        }
         resultImage.src = "img/green.jpg";
         imageContainer.style.display = "block";
         resultElement.textContent = '정상';
+        if (additionalQuestionsDisplayed == false) {
+            additionalQuestionsDisplayed = true;
+            resultImage.onload = function () {
+                clearAdditionalQuestions();
+                imageContainer.scrollIntoView({ behavior: "smooth" });
+            };
+        }
     }
     else if (totalScore < 10) {// 노란불
-        if (additionalQuestionsDisplayed == false){
-            additionalQuestionsDisplayed = true;
-            displayAdditionalQuestions();
-        }
         resultImage.src = "img/yellow.jpg";
         imageContainer.style.display = "block";
         resultElement.textContent = '주의';
+        if (additionalQuestionsDisplayed == false) {
+            additionalQuestionsDisplayed = true;
+            resultImage.onload = function () {
+                clearAdditionalQuestions();
+                imageContainer.scrollIntoView({ behavior: "smooth" });
+            };
+        }
     }
     else if (totalScore >= 10 ) { // 빨간불
-        if (additionalQuestionsDisplayed == true) {
-            additionalQuestionsDisplayed = false;
-            clearAdditionalQuestions();
-        }
         resultImage.src = "img/red.jpg";
         imageContainer.style.display = "block";
         resultElement.textContent = '위험';
+        if (additionalQuestionsDisplayed == true) {
+            additionalQuestionsDisplayed = false;
+            resultImage.onload = function () { 
+                clearAdditionalQuestions();
+                imageContainer.scrollIntoView({ behavior: "smooth" }); 
+            };
+        }
     }
-    resultImage.onload = function () { // 이미지 로드 완료 이벤트 핸들러
-        imageContainer.scrollIntoView({ behavior: "smooth" }); // 이미지 컨테이너로 부드럽게 스크롤
-    };
 });
 
 function displayAdditionalQuestions() {
