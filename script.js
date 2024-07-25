@@ -91,40 +91,33 @@ submitButton.addEventListener("click", () => {
 
     if (totalScore < 5) { // 초록불
         resultImage.src = "img/green.jpg";
-        imageContainer.style.display = "block";
         resultElement.textContent = '정상';
-        if (additionalQuestionsDisplayed == false) {
-            additionalQuestionsDisplayed = true;
-            resultImage.onload = function () {
-                clearAdditionalQuestions();
-                imageContainer.scrollIntoView({ behavior: "smooth" });
-            };
-        }
     }
     else if (totalScore < 10) {// 노란불
         resultImage.src = "img/yellow.jpg";
-        imageContainer.style.display = "block";
         resultElement.textContent = '주의';
-        if (additionalQuestionsDisplayed == false) {
-            additionalQuestionsDisplayed = true;
-            resultImage.onload = function () {
-                clearAdditionalQuestions();
-                imageContainer.scrollIntoView({ behavior: "smooth" });
-            };
-        }
     }
     else if (totalScore >= 10 ) { // 빨간불
         resultImage.src = "img/red.jpg";
-        imageContainer.style.display = "block";
         resultElement.textContent = '위험';
-        if (additionalQuestionsDisplayed == true) {
-            additionalQuestionsDisplayed = false;
-            resultImage.onload = function () { 
-                clearAdditionalQuestions();
-                imageContainer.scrollIntoView({ behavior: "smooth" }); 
-            };
-        }
     }
+
+    imageContainer.style.display = "block";
+
+    resultImage.onload = function () {
+    imageContainer.style.display = "block"; // 이미지 표시
+    if (totalScore < 10) {
+        if (!additionalQuestionsDisplayed) { // 이미 추가 질문이 표시된 경우에는 다시 표시하지 않음
+            additionalQuestionsDisplayed = true;
+            displayAdditionalQuestions();
+        }
+        resultImage.scrollIntoView({ behavior: "smooth" }); // 결과 이미지로 부드럽게 스크롤
+    } else {
+        additionalQuestionsDisplayed = false;
+        clearAdditionalQuestions();
+        resultElement.scrollIntoView({ behavior: "smooth" }); // 결과 텍스트로 부드럽게 스크롤
+    }
+};
 });
 
 function displayAdditionalQuestions() {
@@ -165,8 +158,6 @@ function displayAdditionalQuestions() {
 }
 
 function clearAdditionalQuestions() {
-    const titleElement = document.getElementById("title");
-    titleElement.scrollIntoView({ behavior: "smooth" });
     const additionalQuestionsElement = document.getElementById("additionalQuestions");
     additionalQuestionsElement.style.display = "none";
     additionalQuestionsElement.innerHTML = "";
