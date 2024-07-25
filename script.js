@@ -116,6 +116,9 @@ submitButton.addEventListener("click", () => {
         imageContainer.style.display = "block";
         resultElement.textContent = '위험';
     }
+    resultImage.onload = function () { // 이미지 로드 완료 이벤트 핸들러
+        imageContainer.scrollIntoView({ behavior: "smooth" }); // 이미지 컨테이너로 부드럽게 스크롤
+    };
 });
 
 function displayAdditionalQuestions() {
@@ -153,10 +156,11 @@ function displayAdditionalQuestions() {
         questionDiv.appendChild(buttonsDiv);
         additionalQuestionsElement.appendChild(questionDiv);
     });
-    additionalQuestionsElement.scrollIntoView({ behavior: "smooth" });
 }
 
 function clearAdditionalQuestions() {
+    const titleElement = document.getElementById("title");
+    titleElement.scrollIntoView({ behavior: "smooth" });
     const additionalQuestionsElement = document.getElementById("additionalQuestions");
     additionalQuestionsElement.style.display = "none";
     additionalQuestionsElement.innerHTML = "";
