@@ -47,6 +47,7 @@ questions.forEach(question => {
     xButton.textContent = "X";
     xButton.value = "X";
     xButton.name = question.id;
+    xButton.classList.add("selected", "x-button");
     xButton.addEventListener("click", () => handleButtonClick(question.id, "X"));
     buttonsDiv.appendChild(xButton);
 
