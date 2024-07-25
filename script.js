@@ -124,7 +124,7 @@ submitButton.addEventListener("click", () => {
     } 
     else {
         resultImage.src = "img/red.jpg";
-        resultElement.textContent = "위험";
+        resultElement.textContent = "위험 (응급실 또는 외래 방문) ";
         imageContainer.style.display = "block";
 
         // 추가 질문 제거
