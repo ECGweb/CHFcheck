@@ -93,7 +93,7 @@ submitButton.addEventListener("click", () => {
     resultElement.textContent = `총점: ${totalScore}점`;
 
     // 이미지 표시 및 스크롤 이동
-    if (totalScore < 5) {
+    if (totalScore < 4) {
         resultImage.src = "img/green.jpg";
         resultElement.textContent = "정상";
         imageContainer.style.display = "block";
@@ -107,7 +107,7 @@ submitButton.addEventListener("click", () => {
             };
         }
     } 
-    else if (totalScore < 10) {
+    else if (totalScore < 8) {
         resultImage.src = "img/yellow.jpg";
         resultElement.textContent = "주의";
         imageContainer.style.display = "block";
