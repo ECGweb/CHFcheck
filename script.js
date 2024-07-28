@@ -1,18 +1,16 @@
 const questions = [
-    { question: "평소보다 숨쉬기가 더 힘들어짐", id: "q1", oScore: 1 },
-    { question: "앉아 있거나 누워 있을 때도 숨이 참", id: "q2", oScore: 3 },
-    { question: "2~3일 내에 체중이 2Kg이상 증가함", id: "q3", oScore: 2 },
-    { question: "일주일내에 체중이 2Kg 증가함", id: "q4", oScore: 1 },
-    { question: "발, 발목, 다리, 복부의 부종이 증가함", id: "q5", oScore: 1 },
-    { question: "비정상적인 피로나 약함을 느낌", id: "q6", oScore: 1 },
-    { question: "기침이 계속됨", id: "q7", oScore: 1 },
-    { question: "어지러움", id: "q8", oScore: 1 },
-    { question: "가슴 두근거림", id: "q9", oScore: 1 },
-    { question: "가슴 통증", id: "q10", oScore: 3 },
+    { question: "앉아 있거나 누워 있을 때도 숨이 참", id: "q1", oScore: 3 },
+    { question: "2~3일 내에 체중이 2Kg이상 증가함", id: "q2", oScore: 2 },
+    { question: "발, 발목, 다리, 복부의 부종이 증가함", id: "q3", oScore: 1 },
+    { question: "비정상적인 피로나 약함을 느낌", id: "q4", oScore: 1 },
+    { question: "기침이 계속됨", id: "q5", oScore: 1 },
+    { question: "어지러움", id: "q6", oScore: 1 },
+    { question: "가슴 두근거림", id: "q7", oScore: 1 },
+    { question: "가슴 통증", id: "q8", oScore: 3 },
 ];
 
 const additionalQuestions = [
-    { question: "7g/일이하 소금 섭취하셨나요?", id: "aq1"},
+    { question: "나트륨 2000mg/일이하로 드셨나요?", id: "aq1"},
     { question: "물 종류 1.5~2L/일이하로 드셨나요?", id: "aq2"},
     { question: "오늘 약을 복용하셨나요?", id: "aq3"},
 ];
