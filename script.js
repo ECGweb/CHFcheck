@@ -31,25 +31,23 @@ questions.forEach(question => {
     questionTextDiv.appendChild(questionText);
     questionDiv.appendChild(questionTextDiv);
 
-    const buttonsDiv = document.createElement("div");
-    buttonsDiv.classList.add("buttons");
+    const checkboxDiv = document.createElement("div");
+    checkboxDiv.classList.add("checkbox");
 
-    const oButton = document.createElement("button");
-    oButton.textContent = "O";
-    oButton.value = "O";
-    oButton.name = question.id;
-    oButton.addEventListener("click", () => handleButtonClick(question.id, "O"));
-    buttonsDiv.appendChild(oButton);
+    const checkboxInput = document.createElement("input");
+    checkboxInput.type = "checkbox";
+    checkboxInput.id = question.id;
+    checkboxInput.name = question.id;
+    checkboxInput.value = question.oScore; // 점수를 value 속성에 저장
 
-    const xButton = document.createElement("button");
-    xButton.textContent = "X";
-    xButton.value = "X";
-    xButton.name = question.id;
-    xButton.classList.add("selected", "x-button");
-    xButton.addEventListener("click", () => handleButtonClick(question.id, "X"));
-    buttonsDiv.appendChild(xButton);
+    const checkboxLabel = document.createElement("label");
+    checkboxLabel.htmlFor = question.id;
+    checkboxLabel.textContent = "";
 
-    questionDiv.appendChild(buttonsDiv);
+    checkboxDiv.appendChild(checkboxInput);
+    checkboxDiv.appendChild(checkboxLabel);
+    questionDiv.appendChild(checkboxDiv);
+
     questionsElement.appendChild(questionDiv);
 });
 
@@ -57,38 +55,26 @@ function handleButtonClick(questionId, selectedValue) {
     const allButtons = document.querySelectorAll(`.question button[name="${questionId}"]`);
     allButtons.forEach(button => {
         button.classList.remove("selected");
-        button.classList.remove("o-button"); // O 버튼 클래스 제거
-        button.classList.remove("x-button"); // X 버튼 클래스 제거
     });
 
     const currentButton = document.querySelector(`.question button[name="${questionId}"][value="${selectedValue}"]`);
     currentButton.classList.add("selected");
-    currentButton.classList.add(selectedValue === "O" ? "o-button" : "x-button"); // 선택된 값에 따라 O/X 클래스 추가
 }
 
 submitButton.addEventListener("click", () => {
     let totalScore = 0;
     const answers = {};
-    let allAnswered = true;
     const imageContainer = document.getElementById("imageContainer");
     const resultImage = document.getElementById("resultImage");
     const additionalQuestionsElement = document.getElementById("additionalQuestions");
 
     questions.forEach(question => {
-        const selectedButton = document.querySelector(`.question button[name="${question.id}"].selected`);
-        answers[question.id] = selectedButton ? selectedButton.value : null;
-        if (selectedButton && selectedButton.value === "O") {
-            totalScore += question.oScore;
-        }
-        if (!selectedButton) {
-            allAnswered = false;
+        const checkbox = document.getElementById(question.id);
+        answers[question.id] = checkbox.checked;
+        if (checkbox.checked) {
+            totalScore += Number(question.oScore); // 점수를 숫자로 변환하여 더함
         }
     });
-
-    if (!allAnswered) {
-        alert("모든 질문에 답변해주세요.");
-        return;
-    }
 
     resultElement.textContent = `총점: ${totalScore}점`;
 
@@ -139,6 +125,11 @@ function displayAdditionalQuestions() {
     const additionalQuestionsElement = document.getElementById("additionalQuestions");
     additionalQuestionsElement.style.display = "block";
 
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message");
+    messageDiv.textContent = "다음은 심부전 환자의 건강한 일상생활을 위해 매일 관찰하여야 하는 항목입니다. 해당되는 증상이 있으시면 체크해주세요.";
+    additionalQuestionsElement.appendChild(messageDiv);
+
     additionalQuestions.forEach(question => {
         const questionDiv = document.createElement("div");
         questionDiv.classList.add("question");
@@ -150,24 +141,22 @@ function displayAdditionalQuestions() {
         questionTextDiv.appendChild(questionText);
         questionDiv.appendChild(questionTextDiv);
 
-        const buttonsDiv = document.createElement("div");
-        buttonsDiv.classList.add("buttons");
+        const checkboxDiv = document.createElement("div");
+        checkboxDiv.classList.add("checkbox");
 
-        const oButton = document.createElement("button");
-        oButton.textContent = "O";
-        oButton.value = "O";
-        oButton.name = question.id;
-        oButton.addEventListener("click", () => handleButtonClick(question.id, "O"));
-        buttonsDiv.appendChild(oButton);
+        const checkboxInput = document.createElement("input");
+        checkboxInput.type = "checkbox";
+        checkboxInput.id = question.id;
+        checkboxInput.name = question.id;
 
-        const xButton = document.createElement("button");
-        xButton.textContent = "X";
-        xButton.value = "X";
-        xButton.name = question.id;
-        xButton.addEventListener("click", () => handleButtonClick(question.id, "X"));
-        buttonsDiv.appendChild(xButton);
+        const checkboxLabel = document.createElement("label");
+        checkboxLabel.htmlFor = question.id;
+        checkboxLabel.textContent = ""; // Empty label for better alignment
 
-        questionDiv.appendChild(buttonsDiv);
+        checkboxDiv.appendChild(checkboxInput);
+        checkboxDiv.appendChild(checkboxLabel);
+        questionDiv.appendChild(checkboxDiv);
+
         additionalQuestionsElement.appendChild(questionDiv);
     });
 }
