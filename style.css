@@ -127,7 +127,7 @@ h1 {
     }
 }
 
-.message {
+#explanation {
     margin-bottom: 20px;
     color: red;
 }

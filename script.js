@@ -125,11 +125,6 @@ function displayAdditionalQuestions() {
     const additionalQuestionsElement = document.getElementById("additionalQuestions");
     additionalQuestionsElement.style.display = "block";
 
-    const messageDiv = document.createElement("div");
-    messageDiv.classList.add("message");
-    messageDiv.textContent = "다음은 심부전 환자의 건강한 일상생활을 위해 매일 관찰하여야 하는 항목입니다. 해당되는 증상이 있으시면 체크해주세요.";
-    additionalQuestionsElement.appendChild(messageDiv);
-
     additionalQuestions.forEach(question => {
         const questionDiv = document.createElement("div");
         questionDiv.classList.add("question");
